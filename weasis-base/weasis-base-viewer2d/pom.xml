@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>weasis-base-parent</artifactId>
+    <groupId>org.weasis.base</groupId>
+    <!--suppress MavenPropertyInParent -->
+    <version>${revision}${changelist}</version>
+    <relativePath>../weasis-base-parent/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>weasis-base-viewer2d</artifactId>
+  <packaging>jar</packaging>
+  <name>Base - Image viewer (non-DICOM) [${project.artifactId}]</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-maven-plugin</artifactId>
+        <configuration>
+          <bnd>
+            Export-Package:!org.weasis.base.viewer2d.internal,org.weasis.base.viewer2d.*
+          </bnd>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

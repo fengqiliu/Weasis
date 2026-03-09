@@ -1,0 +1,143 @@
+name: weasis
+title: Weasis
+base: core24
+version: '4.6.5'
+summary: A free/libre/open medical DICOM viewer
+description: |
+  Weasis is a multipurpose standalone and web-based DICOM viewer with 
+  a highly modular architecture. It is a very popular clinical viewer 
+  used in healthcare by hospitals, health networks, multicenter research 
+  trials, and patients.
+  
+  Note: With Snap, the .weasis directory is now located in /home/<username>/snap/weasis/current/.
+  
+  Key features:
+  - Flexible integration to PACS, VNA, RIS, HIS or PHR
+  - Responsive user interface and work well on high DPI screens
+  - Web access through weasis protocol
+  - Multi-language support
+  - Configuration of preferences on server-side and client-side
+  - API for building custom plug-ins
+  - DICOM Send (storeSCU and STOW-RS)
+  - DICOM Query/Retrieve (C-GET, C-MOVE and WADO-URI) and DICOMWeb (QUERY and RETRIEVE)
+  - Dicomizer module (allow importing standard images and convert them in DICOM)
+license: Apache-2.0
+grade: stable
+confinement: strict
+platforms:
+  amd64:
+    build-on: [amd64]
+  arm64:
+    build-on: [arm64]
+
+plugs:
+  desktop:
+    mount-host-font-cache: false
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+  gnome-46-2404:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
+  gpu-2404:
+    interface: content
+    target: $SNAP/gpu-2404
+    default-provider: mesa-2404
+
+layout:
+  /usr/bin/lpr:
+    bind-file: $SNAP/usr/bin/lpr
+
+parts:
+  remote-openjdk:
+    plugin: dump
+    source:
+      - on amd64: https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_x64_linux_hotspot_24.0.2_12.tar.gz
+      - on arm64: https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.2%2B12/OpenJDK24U-jdk_aarch64_linux_hotspot_24.0.2_12.tar.gz
+    source-checksum:
+      - on amd64: sha256/aea1cc55e51cf651c85f2f00ad021603fe269c4bb6493fa97a321ad770c9b096
+      - on arm64: sha256/6f8725d186d05c627176db9c46c732a6ef3ba41d9e9b3775c4727fc8ac642bb2
+    organize:
+      '*': java-runtime/
+    override-stage: 'true'
+    override-prime: 'true'
+
+  remote-weasis-build:
+    after: [remote-openjdk]
+    plugin: dump
+    stage-packages:
+      - libc6
+      - xdg-utils
+      - zlib1g
+      - libstdc++6
+      - libgcc1
+    #source: weasis-distributions/target/native-dist/weasis-native.zip
+    source: https://github.com/nroduit/Weasis/releases/download/v4.6.5/weasis-native.zip
+    source-checksum: sha256/5327d29b2fae1ef66c648be8c08d9bee9c010dc2dde3b71888a3f2c6a83e0d9f
+    organize:
+      '*': weasis-native/
+    override-stage: 'true'
+    override-prime: 'true'
+
+  weasis:
+    after: [remote-weasis-build]
+    plugin: nil
+    source: .
+    source-type: local
+    source-subdir: weasis-distributions
+    override-build: |
+      echo "Preparing Weasis build environment..."
+      WEASIS_REMOTE=$(echo ${SNAPCRAFT_PART_INSTALL} | sed 's|parts/weasis/|parts/remote-weasis-build/|g')
+      WEASIS_JDK=$(echo ${SNAPCRAFT_PART_INSTALL} | sed 's|parts/weasis/|parts/remote-openjdk/|g')
+      cp -Rf ${WEASIS_REMOTE}/weasis-native ${SNAPCRAFT_PART_BUILD}/
+      weasis-native/build/script/package-weasis.sh --output ${SNAPCRAFT_PART_INSTALL} --no-installer --jdk ${WEASIS_JDK}/java-runtime
+      mv ${SNAPCRAFT_PART_INSTALL}/Weasis/* ${SNAPCRAFT_PART_INSTALL}/
+      rm -rf ${SNAPCRAFT_PART_INSTALL}/Weasis
+      snapcraftctl build
+
+apps:
+  weasis:
+    extensions: [gnome]
+    command: bin/Weasis
+    environment:
+      _JAVA_OPTIONS: -Duser.home=$SNAP_USER_DATA
+    plugs:
+      - network
+      - desktop
+      - x11
+      - home
+      - network-bind
+      - gsettings
+      - opengl
+      - avahi-control
+      - mount-observe
+      - removable-media
+      - cups-control
+  
+  dicomizer:
+    extensions: [gnome]
+    command: bin/Dicomizer
+    environment:
+      _JAVA_OPTIONS: -Duser.home=$SNAP_USER_DATA
+    plugs:
+      - network
+      - desktop
+      - x11
+      - home
+      - network-bind
+      - gsettings
+      - opengl
+      - avahi-control
+      - mount-observe
+      - removable-media
+      - cups-control

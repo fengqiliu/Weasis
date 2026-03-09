@@ -1,0 +1,50 @@
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
+.idea/
+.run/
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+# NetBeans specific
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Ignore Maven files
+target/
+release.properties
+pom.xml.releaseBackup
+pom.xml.tag
+dependency-reduced-pom.xml
+.flattened-pom.xml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# crash file
+hs_err*.log
+
+# bndTools
+/generated/
+/index.xml*
+/bin/
+/src/
+
+# Mac temporary folders
+_*/
+
+#snap
+weasis_*.snap
+#comlile
+build-dist
+

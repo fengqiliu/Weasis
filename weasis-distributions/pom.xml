@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>weasis-parent</artifactId>
+    <groupId>org.weasis</groupId>
+    <!--suppress MavenPropertyInParent -->
+    <version>${revision}${changelist}</version>
+    <relativePath>../weasis-parent/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>weasis-distributions</artifactId>
+  <packaging>pom</packaging>
+  <name>Weasis Distributions (Standalone and WEB)</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- dollar property to avoid replacing some variables when filtering resources files (ex. ${user.home} in config.properties) -->
+    <dollar>$</dollar>
+    <tmp.dir>${project.build.directory}/tmp</tmp.dir>
+    <tmp.bundle.dir>${project.build.directory}/tmp/bundle</tmp.bundle.dir>
+
+    <xz.ext/>
+    <windowsName>weasis-native</windowsName>
+  </properties>
+
+  <!-- Override for getting snapshot -->
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <id>mvn-repo-master</id>
+      <url>https://raw.githubusercontent.com/nroduit/mvn-repo/master/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <!-- Force to use central first (override from super POM) -->
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>mvn-repo-master</id>
+      <url>https://raw.githubusercontent.com/nroduit/mvn-repo/master/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>unpack-i18njar</id>
+              <phase>package</phase>
+              <goals>
+                <goal>unpack</goal>
+              </goals>
+              <configuration>
+                <artifactItems>
+                  <artifactItem>
+                    <groupId>org.weasis</groupId>
+                    <artifactId>weasis-i18n-dist</artifactId>
+                    <version>${i18n.version}</version>
+                    <type>zip</type>
+                    <outputDirectory>${project.build.directory}/tmp/bundle-i18n</outputDirectory>
+                  </artifactItem>
+                </artifactItems>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>native</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+              <configuration>
+                <attach>true</attach>
+                <finalName>weasis-native</finalName>
+                <appendAssemblyId>false</appendAssemblyId>
+                <outputDirectory>${project.build.directory}/native-dist</outputDirectory>
+                <descriptors>
+                  <descriptor>src/assembly/native-dist.xml</descriptor>
+                </descriptors>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>urlrewrite-regex-version-properties</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>regex-properties</goal>
+            </goals>
+
+            <configuration>
+              <regexPropertySettings>
+                <regexPropertySetting>
+                  <name>regex.app.version</name>
+                  <value>${app.version}</value>
+                  <regex>[\.]</regex>
+                  <replacement>\\.</replacement>
+                  <failIfNoMatch>false</failIfNoMatch>
+                </regexPropertySetting>
+              </regexPropertySettings>
+            </configuration>
+          </execution>
+          <execution>
+            <id>timestamp-property</id>
+            <goals>
+              <goal>timestamp-property</goal>
+            </goals>
+            <configuration>
+              <name>build.year</name>
+              <pattern>yyyy</pattern>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-bundles</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <!-- ===================================== -->
+                <!-- OSGI Framework and Launcher -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.framework</artifactId>
+                  <version>${felix.framework.version}</version>
+                  <outputDirectory>${tmp.dir}</outputDirectory>
+                  <destFileName>felix.jar</destFileName>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.launcher</groupId>
+                  <artifactId>weasis-launcher</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.dir}</outputDirectory>
+                  <destFileName>weasis-launcher.jar</destFileName>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Felix bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.gogo.runtime</artifactId>
+                  <version>${felix.gogo.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.gogo.shell</artifactId>
+                  <version>${felix.gogo.shell.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.gogo.command</artifactId>
+                  <version>${felix.gogo.command.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.osgi</groupId>
+                  <artifactId>osgi.promise</artifactId>
+                  <version>${osgi.promise.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.scr</artifactId>
+                  <version>${felix.scr.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.prefs</artifactId>
+                  <version>${felix.prefs.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.bundlerepository</artifactId>
+                  <version>${felix.bundlerepository.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.felix</groupId>
+                  <artifactId>org.apache.felix.configadmin</artifactId>
+                  <version>${felix.configadmin.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.osgi</groupId>
+                  <artifactId>org.osgi.service.component</artifactId>
+                  <version>${osgi.component.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Other required bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty</groupId>
+                  <artifactId>jaxb-osgi</artifactId>
+                  <version>${jaxb.osgi.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.miglayout</groupId>
+                  <artifactId>miglayout-swing</artifactId>
+                  <version>${miglayout.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.miglayout</groupId>
+                  <artifactId>miglayout-core</artifactId>
+                  <version>${miglayout.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty</groupId>
+                  <artifactId>docking-frames</artifactId>
+                  <version>${dockingframes.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                  <destFileName>docking-frames-${dockingframes.version}.jar</destFileName>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.joml</groupId>
+                  <artifactId>joml</artifactId>
+                  <version>${joml.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.fasterxml.jackson.core</groupId>
+                  <artifactId>jackson-databind</artifactId>
+                  <version>${jackson.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.fasterxml.jackson.core</groupId>
+                  <artifactId>jackson-core</artifactId>
+                  <version>${jackson.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>com.fasterxml.jackson.core</groupId>
+                  <artifactId>jackson-annotations</artifactId>
+                  <version>${jackson.an.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>net.lingala.zip4j</groupId>
+                  <artifactId>zip4j</artifactId>
+                  <version>${zip4j.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Weasis Core bundle -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.core</groupId>
+                  <artifactId>weasis-core</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Weasis OpenCV bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.core</groupId>
+                  <artifactId>weasis-core-img</artifactId>
+                  <version>${weasis.core.img.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.opencv</groupId>
+                  <artifactId>weasis-opencv-core-linux-x86-64</artifactId>
+                  <version>${weasis.opencv.pkg.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.opencv</groupId>
+                  <artifactId>weasis-opencv-core-linux-aarch64</artifactId>
+                  <version>${weasis.opencv.pkg.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.opencv</groupId>
+                  <artifactId>weasis-opencv-core-macosx-aarch64</artifactId>
+                  <version>${weasis.opencv.pkg.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.opencv</groupId>
+                  <artifactId>weasis-opencv-core-macosx-x86-64</artifactId>
+                  <version>${weasis.opencv.pkg.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.opencv</groupId>
+                  <artifactId>weasis-opencv-core-windows-x86-64</artifactId>
+                  <version>${weasis.opencv.pkg.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+
+                <!-- ===================================== -->
+                <!-- Weasis Imageio bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.imageio</groupId>
+                  <artifactId>weasis-imageio-codec</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+
+                <!-- ===================================== -->
+                <!-- Weasis 3D Modules -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.dicom.3d</groupId>
+                  <artifactId>weasis-dicom-viewer3d</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty.org.jogamp</groupId>
+                  <artifactId>jogamp</artifactId>
+                  <version>${jogamp.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty.org.jogamp</groupId>
+                  <artifactId>jogamp-linux-x86-64</artifactId>
+                  <version>${jogamp.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty.org.jogamp</groupId>
+                  <artifactId>jogamp-linux-aarch64</artifactId>
+                  <version>${jogamp.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty.org.jogamp</groupId>
+                  <artifactId>jogamp-macosx-aarch64</artifactId>
+                  <version>${jogamp.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty.org.jogamp</groupId>
+                  <artifactId>jogamp-macosx-x86-64</artifactId>
+                  <version>${jogamp.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.thirdparty.org.jogamp</groupId>
+                  <artifactId>jogamp-windows-x86-64</artifactId>
+                  <version>${jogamp.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Weasis Base bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.base</groupId>
+                  <artifactId>weasis-base-ui</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.base</groupId>
+                  <artifactId>weasis-base-viewer2d</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.base</groupId>
+                  <artifactId>weasis-base-explorer</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Weasis DICOM bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-codec</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-explorer</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-viewer2d</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-sr</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-au</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-send</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-qr</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-rt</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-wave</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.dicom</groupId>
+                  <artifactId>weasis-dicom-isowriter</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+                <!-- ===================================== -->
+                <!-- Weasis Acquisition bundles -->
+                <!-- ===================================== -->
+                <artifactItem>
+                  <groupId>org.weasis.acquire</groupId>
+                  <artifactId>weasis-acquire-explorer</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.weasis.acquire</groupId>
+                  <artifactId>weasis-acquire-editor</artifactId>
+                  <version>${app.version}</version>
+                  <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                </artifactItem>
+
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>zip-resources</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <attach>false</attach>
+              <finalName>resources</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/assembly/zip-resources.xml</descriptor>
+              </descriptors>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <!-- http://www.tuckey.org/urlrewrite/ -->
+      <groupId>org.tuckey</groupId>
+      <artifactId>urlrewritefilter</artifactId>
+      <version>5.1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.weasis</groupId>
+      <artifactId>weasis-i18n-dist</artifactId>
+      <version>${i18n.version}</version>
+      <type>zip</type>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>compressXZ</id>
+      <properties>
+        <xz.ext>.xz</xz.ext>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.weasis.maven</groupId>
+            <artifactId>build-xz-plugin</artifactId>
+            <version>1.1.0</version>
+            <executions>
+              <execution>
+                <id>xz</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>packFiles</goal>
+                </goals>
+                <configuration>
+                  <archiveDirectory>${tmp.bundle.dir}</archiveDirectory>
+                  <includes>
+                    <include>**/*.jar</include>
+                  </includes>
+                </configuration>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-utils</artifactId>
+                <version>4.0.0</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>purgeI18nPackage</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>purge-local-dependencies</id>
+                <phase>process-sources</phase>
+                <goals>
+                  <goal>purge-local-repository</goal>
+                </goals>
+                <configuration>
+                  <includes>
+                    <include>org.weasis:weasis-i18n-dist</include>
+                  </includes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>jar.signer</id>
+      <activation>
+        <!-- Use your own certificate either: mvn package -Djarsigner.alias="alias" -Djarsigner.storepass="storepass" -Djarsigner.keystore="/etc/cert_keystore" or : add properties in setting.xml (<jarsigner.alias>alias</jarsigner.alias>) -->
+        <property>
+          <name>jarsigner.alias</name>
+        </property>
+      </activation>
+
+      <properties>
+        <jarsigner.include.pattern>**/*.jar</jarsigner.include.pattern>
+        <!-- if only root "jar" files should be processed, those referenced for download by JavaWebStart, use the following pattern instead -->
+        <!-- <jarsigner.include.pattern>*.jar</jarsigner.include.pattern> -->
+      </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <!-- Uncomment and provide proxy server setting when it is necessary to reach time stamping server from corporate network -->
+            <!--<configuration> -->
+            <!--<arguments> -->
+            <!--<argument>-J-Dhttp.proxyHost=</argument> -->
+            <!--<argument>-J-Dhttp.proxyPort=</argument> -->
+            <!--</arguments> -->
+            <!--</configuration> -->
+            <executions>
+              <execution>
+                <id>sign</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <removeExistingSignatures>true</removeExistingSignatures>
+                  <archiveDirectory>${tmp.dir}</archiveDirectory>
+                  <includes>
+                    <include>${jarsigner.include.pattern}</include>
+                  </includes>
+                  <excludes>
+                    <!-- exclude .original.jar files that will be excluded from final packaging -->
+                    <exclude>bundle/*.original.jar</exclude>
+                  </excludes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2009-2020 Weasis Team and other contributors.
+ *
+ * This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License 2.0 which is available at https://www.eclipse.org/legal/epl-2.0, or the Apache
+ * License, Version 2.0 which is available at https://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR Apache-2.0
+ */
+package org.weasis.dicom.viewer2d;
+
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.Timer;
+import org.weasis.core.api.gui.util.ActionW;
+import org.weasis.core.api.gui.util.GuiUtils;
+import org.weasis.core.api.media.data.MediaSeries;
+import org.weasis.core.api.util.ResourceUtil;
+import org.weasis.core.api.util.ResourceUtil.OtherIcon;
+import org.weasis.core.ui.editor.image.ImageViewerPlugin;
+import org.weasis.core.ui.editor.image.ViewCanvas;
+import org.weasis.core.ui.util.WtoolBar;
+import org.weasis.dicom.codec.DicomImageElement;
+import org.weasis.dicom.explorer.LoadLocalDicom;
+import org.weasis.dicom.viewer2d.mip.MipPopup;
+import org.weasis.dicom.viewer2d.mip.MipPopup.MipDialog;
+import org.weasis.dicom.viewer2d.mip.MipView;
+import org.weasis.dicom.viewer2d.mpr.MprFactory;
+
+public class Basic3DToolBar extends WtoolBar {
+
+  public Basic3DToolBar(int index) {
+    super(Messages.getString("Basic3DToolBar.title"), index);
+
+    final JButton mprButton = new JButton(ResourceUtil.getToolBarIcon(OtherIcon.VIEW_3D));
+    mprButton.setToolTipText(Messages.getString("Basic3DToolBar.mpr.oblique"));
+    mprButton.addActionListener(MprFactory.getMprAction(null));
+    add(mprButton);
+
+    final JButton mipButton = new JButton(ResourceUtil.getToolBarIcon(OtherIcon.VIEW_MIP));
+    mipButton.setToolTipText(Messages.getString("Basic3DToolBar.mip"));
+    mipButton.addActionListener(getMipAction());
+    add(mipButton);
+
+    // Attach 3D functions to the Volume actions
+    EventManager.getInstance()
+        .getAction(ActionW.VOLUME)
+        .ifPresent(
+            s -> {
+              s.registerActionState(mprButton);
+              s.registerActionState(mipButton);
+            });
+  }
+
+  public static ActionListener getMipAction() {
+    return e -> {
+      EventManager eventManager = EventManager.getInstance();
+      ImageViewerPlugin<DicomImageElement> container = eventManager.getSelectedView2dContainer();
+      if (container instanceof View2dContainer) {
+        ViewCanvas<DicomImageElement> selView = container.getSelectedImagePane();
+        if (selView != null) {
+          MediaSeries<DicomImageElement> s = selView.getSeries();
+          if (s != null && s.size(null) > 2) {
+            s = LoadLocalDicom.confirmSplittingMultiPhaseSeries(s);
+            if (s == null) {
+              return;
+            }
+            container.setSelectedAndGetFocus();
+            MipView newView2d = new MipView(eventManager);
+            newView2d.registerDefaultListeners();
+            newView2d.initMIPSeries(selView);
+            container.replaceView(selView, newView2d);
+            MipDialog dialog = MipPopup.buildDialog(newView2d);
+            dialog.pack();
+            MipView.buildMip(newView2d);
+            dialog.updateThickness();
+
+            // Schedule to restore proper focus selection after dialog is shown
+            Timer timer = new Timer(75, _ -> container.setSelectedImagePaneFromFocus(newView2d));
+            timer.setRepeats(false);
+            timer.start();
+
+            GuiUtils.showCenterScreen(dialog, container, GuiUtils.WindowPosition.E);
+          }
+        }
+      }
+    };
+  }
+}

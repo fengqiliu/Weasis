@@ -1,0 +1,447 @@
+/*
+ * Copyright (c) 2009-2020 Weasis Team and other contributors.
+ *
+ * This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License 2.0 which is available at https://www.eclipse.org/legal/epl-2.0, or the Apache
+ * License, Version 2.0 which is available at https://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR Apache-2.0
+ */
+package org.weasis.core.api.media.data;
+
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import javax.swing.SwingUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.weasis.core.Messages;
+import org.weasis.core.api.explorer.ObservableEvent;
+import org.weasis.core.api.gui.util.Filter;
+import org.weasis.core.api.gui.util.GuiUtils;
+import org.weasis.core.util.LangUtil;
+import org.weasis.core.util.StringUtil;
+import org.weasis.opencv.data.PlanarImage;
+
+public abstract class Series<E extends MediaElement> extends MediaSeriesGroupNode
+    implements MediaSeries<E> {
+  private static final Logger LOGGER = LoggerFactory.getLogger(Series.class);
+
+  public static final DataFlavor sequenceDataFlavor =
+      createConstant(
+          DataFlavor.javaJVMLocalObjectMimeType + ";class=" + Series.class.getName(), // NON-NLS
+          null);
+
+  private static final Random RANDOM = new SecureRandom();
+  private static final DataFlavor[] flavors = {sequenceDataFlavor};
+
+  private PropertyChangeSupport propertyChange = null;
+  protected final List<E> medias;
+  protected final Map<Comparator<E>, List<E>> sortedMedias = new HashMap<>(6);
+  protected final Comparator<E> mediaOrder;
+  protected SeriesImporter seriesLoader;
+  private long fileSize;
+
+  protected Series(TagW tagID, Object identifier, TagView displayTag) {
+    this(tagID, identifier, displayTag, null);
+  }
+
+  protected Series(TagW tagID, Object identifier, TagView displayTag, int initialCapacity) {
+    this(tagID, identifier, displayTag, new ArrayList<>(initialCapacity));
+  }
+
+  protected Series(TagW tagID, Object identifier, TagView displayTag, List<E> list) {
+    this(tagID, identifier, displayTag, list, null);
+  }
+
+  protected Series(
+      TagW tagID, Object identifier, TagView displayTag, List<E> list, Comparator<E> mediaOrder) {
+    super(tagID, identifier, displayTag);
+    this.mediaOrder = mediaOrder;
+    List<E> ls = list;
+    if (ls == null) {
+      ls = new ArrayList<>();
+      fileSize = 0L;
+    } else if (mediaOrder != null) {
+      ls.sort(mediaOrder);
+    }
+    medias = Collections.synchronizedList(ls);
+  }
+
+  private static DataFlavor createConstant(String mt, String prn) {
+    try {
+      return new DataFlavor(mt, prn, Series.class.getClassLoader());
+    } catch (Exception e) {
+      LOGGER.error("Build series flavor", e);
+      return null;
+    }
+  }
+
+  protected void resetSortedMediasMap() {
+    if (!sortedMedias.isEmpty()) {
+      sortedMedias.clear();
+    }
+  }
+
+  /**
+   * Remove all medias from the series and reset the sorted medias map. Note: this method does not
+   * dispose the media elements and removes images from the cache.
+   */
+  public void removeAllMedias() {
+    medias.clear();
+    resetSortedMediasMap();
+  }
+
+  @Override
+  public List<E> getSortedMedias(Comparator<E> comparator) {
+    // Do not sort when it is the default order.
+    if (comparator != null && !comparator.equals(mediaOrder)) {
+      return sortedMedias.computeIfAbsent(
+          comparator,
+          k -> {
+            List<E> sorted = new ArrayList<>(medias);
+            sorted.sort(comparator);
+            return sorted;
+          });
+    }
+    return medias;
+  }
+
+  @Override
+  public void add(E media) {
+    medias.add(media);
+    resetSortedMediasMap();
+  }
+
+  @Override
+  public void add(int index, E media) {
+    medias.add(index, media);
+    resetSortedMediasMap();
+  }
+
+  @Override
+  public void addAll(Collection<? extends E> c) {
+    medias.addAll(c);
+    resetSortedMediasMap();
+  }
+
+  @Override
+  public void addAll(int index, Collection<? extends E> c) {
+    medias.addAll(index, c);
+    resetSortedMediasMap();
+  }
+
+  @Override
+  public final E getMedia(MEDIA_POSITION position, Filter<E> filter, Comparator<E> sort) {
+    List<E> sortedList = getSortedMedias(sort);
+    synchronized (this) {
+      if (filter == null) {
+        int size = sortedList.size();
+        if (size == 0) {
+          return null;
+        }
+        int pos = 0;
+        if (MEDIA_POSITION.FIRST.equals(position)) {
+          pos = 0;
+        } else if (MEDIA_POSITION.MIDDLE.equals(position)) {
+          pos = size / 2;
+        } else if (MEDIA_POSITION.LAST.equals(position)) {
+          pos = size - 1;
+        } else if (MEDIA_POSITION.RANDOM.equals(position)) {
+          pos = RANDOM.nextInt(size);
+        }
+        return sortedList.get(pos);
+      } else {
+        Iterable<E> iter = filter.filter(sortedList);
+        Iterator<E> list = iter.iterator();
+        if (list.hasNext()) {
+          E val = list.next();
+          if (MEDIA_POSITION.FIRST.equals(position)) {
+            return val;
+          }
+          int pos = 0;
+          int size = Filter.size(iter);
+          if (MEDIA_POSITION.MIDDLE.equals(position)) {
+            pos = size / 2;
+          } else if (MEDIA_POSITION.LAST.equals(position)) {
+            pos = size - 1;
+          } else if (MEDIA_POSITION.RANDOM.equals(position)) {
+            pos = RANDOM.nextInt(size);
+          }
+          int k = 0;
+          for (E elem : iter) {
+            if (k == pos) {
+              return elem;
+            }
+          }
+          return val;
+        } else {
+          return null;
+        }
+      }
+    }
+  }
+
+  public final int getImageIndex(E source, Filter<E> filter, Comparator<E> sort) {
+    if (source == null) {
+      return -1;
+    }
+    Iterable<E> list = getMedias(filter, sort);
+    synchronized (medias) {
+      int index = 0;
+      for (E e : list) {
+        if (e == source) {
+          return index;
+        }
+        index++;
+      }
+    }
+    return -1;
+  }
+
+  @Override
+  public final Iterable<E> getMedias(Filter<E> filter, Comparator<E> sort) {
+    List<E> sortedList = getSortedMedias(sort);
+    return filter == null ? sortedList : filter.filter(sortedList);
+  }
+
+  @Override
+  public final List<E> copyOfMedias(Filter<E> filter, Comparator<E> sort) {
+    List<E> sortedList = getSortedMedias(sort);
+    return filter == null
+        ? new ArrayList<>(sortedList)
+        : Filter.makeList(filter.filter(sortedList));
+  }
+
+  @Override
+  public final E getMedia(int index, Filter<E> filter, Comparator<E> sort) {
+    List<E> sortedList = getSortedMedias(sort);
+    synchronized (this) {
+      if (filter == null) {
+        if (index >= 0 && index < sortedList.size()) {
+          return sortedList.get(index);
+        }
+      } else {
+        if (index >= 0) {
+          Iterable<E> iter = filter.filter(sortedList);
+          int k = 0;
+          for (E elem : iter) {
+            if (k == index) {
+              return elem;
+            }
+            k++;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public synchronized void dispose() {
+    medias.forEach(
+        m -> {
+          if (m instanceof ImageElement imageElement) {
+            // Removing from cache will close the image stream
+            imageElement.removeImageFromCache();
+          }
+          m.dispose();
+        });
+
+    removeAllMedias();
+
+    Optional.ofNullable((Thumbnail) getTagValue(TagW.Thumbnail)).ifPresent(Thumbnail::dispose);
+    if (propertyChange != null) {
+      Arrays.asList(propertyChange.getPropertyChangeListeners())
+          .forEach(propertyChange::removePropertyChangeListener);
+    }
+    seriesLoader = null;
+  }
+
+  @Override
+  public SeriesImporter getSeriesLoader() {
+    return seriesLoader;
+  }
+
+  @Override
+  public void setSeriesLoader(SeriesImporter seriesLoader) {
+    this.seriesLoader = seriesLoader;
+  }
+
+  @Override
+  public DataFlavor[] getTransferDataFlavors() {
+    return flavors;
+  }
+
+  @Override
+  public boolean isDataFlavorSupported(DataFlavor flavor) {
+    return sequenceDataFlavor.equals(flavor);
+  }
+
+  @Override
+  public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
+    if (sequenceDataFlavor.equals(flavor)) {
+      return this;
+    }
+    throw new UnsupportedFlavorException(flavor);
+  }
+
+  public void addPropertyChangeListener(PropertyChangeListener propertychangelistener) {
+    if (propertyChange == null) {
+      propertyChange = new PropertyChangeSupport(this);
+    }
+    propertyChange.addPropertyChangeListener(propertychangelistener);
+  }
+
+  public void removePropertyChangeListener(PropertyChangeListener propertychangelistener) {
+    if (propertyChange != null) {
+      propertyChange.removePropertyChangeListener(propertychangelistener);
+    }
+  }
+
+  public void firePropertyChange(final ObservableEvent event) {
+    if (propertyChange != null) {
+      if (event == null) {
+        throw new NullPointerException();
+      }
+      if (SwingUtilities.isEventDispatchThread()) {
+        propertyChange.firePropertyChange(event);
+      } else {
+        SwingUtilities.invokeLater(() -> propertyChange.firePropertyChange(event));
+      }
+    }
+  }
+
+  @Override
+  public synchronized int size(Filter<E> filter) {
+    return filter == null ? medias.size() : Filter.size(filter.filter(medias));
+  }
+
+  @Override
+  public boolean isOpen() {
+    Boolean open = (Boolean) getTagValue(TagW.SeriesOpen);
+    return open != null && open;
+  }
+
+  @Override
+  public String getToolTips() {
+    E media = this.getMedia(MEDIA_POSITION.MIDDLE, null, null);
+    if (media instanceof ImageElement image) {
+      PlanarImage img = image.getImage();
+      if (img != null) {
+        return """
+          <html>%s: %sx%s</html>
+          """
+            .formatted(Messages.getString("Series.img_size"), img.width(), img.height());
+      }
+    }
+    return StringUtil.EMPTY_STRING;
+  }
+
+  public void addToolTipsElement(StringBuilder toolTips, String title, TagW tag) {
+    toolTips.append(title);
+    toolTips.append(StringUtil.COLON_AND_SPACE);
+    if (tag != null) {
+      toolTips.append(tag.getFormattedTagValue(getTagValue(tag), null));
+    }
+    toolTips.append(GuiUtils.HTML_BR);
+  }
+
+  @Override
+  public void setOpen(boolean open) {
+    if (this.isOpen() != open) {
+      setTag(TagW.SeriesOpen, open);
+      Thumbnail thumb = (Thumbnail) getTagValue(TagW.Thumbnail);
+      if (thumb != null) {
+        thumb.repaint();
+      }
+      if (!open) {
+        resetSortedMediasMap();
+      }
+    }
+  }
+
+  @Override
+  public boolean isSelected() {
+    return LangUtil.getNULLtoFalse((Boolean) getTagValue(TagW.SeriesSelected));
+  }
+
+  @Override
+  public void setSelected(boolean selected, E selectedImage) {
+    if (this.isSelected() != selected) {
+      setTag(TagW.SeriesSelected, selected);
+      Thumbnail thumb = (Thumbnail) getTagValue(TagW.Thumbnail);
+      if (thumb != null) {
+        thumb.repaint();
+      }
+    }
+  }
+
+  @Override
+  public boolean isFocused() {
+    return LangUtil.getNULLtoFalse((Boolean) getTagValue(TagW.SeriesFocused));
+  }
+
+  @Override
+  public void setFocused(boolean focused) {
+    if (this.isFocused() != focused) {
+      setTag(TagW.SeriesFocused, focused);
+      Thumbnail thumb = (Thumbnail) getTagValue(TagW.Thumbnail);
+      if (thumb != null) {
+        thumb.repaint();
+      }
+    }
+  }
+
+  public boolean hasMediaContains(TagW tag, Object val) {
+    if (val != null) {
+      synchronized (medias) {
+        for (E media : medias) {
+          if (val.equals(media.getTagValue(tag))) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public E getNearestImage(double location, int offset, Filter<E> filter, Comparator<E> sort) {
+    return null;
+  }
+
+  @Override
+  public int getNearestImageIndex(
+      double location, int offset, Filter<E> filter, Comparator<E> sort) {
+    return -1;
+  }
+
+  public synchronized void setFileSize(long size) {
+    fileSize = size;
+  }
+
+  @Override
+  public synchronized long getFileSize() {
+    return fileSize;
+  }
+
+  @Override
+  public String getSeriesNumber() {
+    Integer val = (Integer) getTagValue(TagW.get("SeriesNumber"));
+    return Optional.ofNullable(val).map(String::valueOf).orElse("");
+  }
+}

@@ -1,0 +1,558 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.opencv:weasis-opencv-core-linux-aarch64:jar:4.12.2-dcm
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.opencv:weasis-opencv-core-linux-aarch64:${weasis.opencv.pkg.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\pom.xml, line 16, column 11
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.opencv:weasis-opencv-core-linux-x86-64:jar:4.12.2-dcm
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.opencv:weasis-opencv-core-linux-x86-64:${weasis.opencv.pkg.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.opencv:weasis-opencv-core-macosx-aarch64:jar:4.12.2-dcm
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.opencv:weasis-opencv-core-macosx-aarch64:${weasis.opencv.pkg.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.opencv:weasis-opencv-core-macosx-x86-64:jar:4.12.2-dcm
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.opencv:weasis-opencv-core-macosx-x86-64:${weasis.opencv.pkg.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.opencv:weasis-opencv-core-windows-x86-64:jar:4.12.2-dcm
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.opencv:weasis-opencv-core-windows-x86-64:${weasis.opencv.pkg.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.thirdparty.org.jogamp:jogamp:jar:2.6.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.thirdparty.org.jogamp:jogamp:${jogamp.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-dicom\weasis-dicom-3d\jogamp\pom.xml, line 17, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.thirdparty.org.jogamp:jogamp-linux-aarch64:jar:2.6.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.thirdparty.org.jogamp:jogamp-linux-aarch64:${jogamp.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-dicom\weasis-dicom-3d\jogamp-native\jogamp-linux-aarch64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.thirdparty.org.jogamp:jogamp-linux-x86-64:jar:2.6.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.thirdparty.org.jogamp:jogamp-linux-x86-64:${jogamp.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-dicom\weasis-dicom-3d\jogamp-native\jogamp-linux-x86-64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.thirdparty.org.jogamp:jogamp-macosx-aarch64:jar:2.6.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.thirdparty.org.jogamp:jogamp-macosx-aarch64:${jogamp.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-dicom\weasis-dicom-3d\jogamp-native\jogamp-macosx-aarch64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.thirdparty.org.jogamp:jogamp-macosx-x86-64:jar:2.6.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.thirdparty.org.jogamp:jogamp-macosx-x86-64:${jogamp.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-dicom\weasis-dicom-3d\jogamp-native\jogamp-macosx-x86-64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.weasis.thirdparty.org.jogamp:jogamp-windows-x86-64:jar:2.6.0
+[WARNING] 'version' contains an expression but should be a constant. @ org.weasis.thirdparty.org.jogamp:jogamp-windows-x86-64:${jogamp.version}, E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-dicom\weasis-dicom-3d\jogamp-native\jogamp-windows-x86-64\pom.xml, line 16, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Weasis framework parent [weasis-parent]                            [pom]
+[INFO] OpenCV plugins [weasis-opencv]                                     [pom]
+[INFO] OpenCV - Linux aarch64 [weasis-opencv-core-linux-aarch64]          [jar]
+[INFO] OpenCV - Linux amd64 [weasis-opencv-core-linux-x86-64]             [jar]
+[INFO] OpenCV - Mac Silicone ARM-64 [weasis-opencv-core-macosx-aarch64]   [jar]
+[INFO] OpenCV - Mac amd64 [weasis-opencv-core-macosx-x86-64]              [jar]
+[INFO] OpenCV - Windows x86-64 [weasis-opencv-core-windows-x86-64]        [jar]
+[INFO] Weasis Launcher (Felix) [weasis-launcher]                          [jar]
+[INFO] Core [weasis-core]                                                 [jar]
+[INFO] ImageIO codecs [weasis-imageio-codec]                              [jar]
+[INFO] Base parent [weasis-base-parent]                                   [pom]
+[INFO] Base UI [weasis-base-ui]                                           [jar]
+[INFO] Base - Media explorer [weasis-base-explorer]                       [jar]
+[INFO] Base - Image viewer (non-DICOM) [weasis-base-viewer2d]             [jar]
+[INFO] Base plugins [weasis-base]                                         [pom]
+[INFO] DICOM parent [weasis-dicom-parent]                                 [pom]
+[INFO] DICOM - Codecs and parsers for DICOM [weasis-dicom-codec]          [jar]
+[INFO] DICOM - Data explorer [weasis-dicom-explorer]                      [jar]
+[INFO] DICOM - Viewer (2D and MPR) [weasis-dicom-viewer2d]                [jar]
+[INFO] DICOM - Viewer of DICOM Structured Report [weasis-dicom-sr]        [jar]
+[INFO] DICOM - Viewer for ECGs [weasis-dicom-wave]                        [jar]
+[INFO] DICOM - Audio Player [weasis-dicom-au]                             [jar]
+[INFO] DICOM - Send (DICOM and DICOMWeb protocols) [weasis-dicom-send]    [jar]
+[INFO] DICOM - Query/Retrieve [weasis-dicom-qr]                           [jar]
+[INFO] DICOM - Viewer for RTs (radiotherapy) [weasis-dicom-rt]            [jar]
+[INFO] DICOM - Export ISO image [weasis-dicom-isowriter]                  [jar]
+[INFO] 3D Plug-ins [weasis-dicom-3d]                                      [pom]
+[INFO] JOGL - Java Bindings for OpenGL [jogamp]                           [jar]
+[INFO] JOGL plugins [jogamp-native]                                       [pom]
+[INFO] JOGL - Linux aarch64 [jogamp-linux-aarch64]                        [jar]
+[INFO] JOGL - Linux x86-64 [jogamp-linux-x86-64]                          [jar]
+[INFO] JOGL - MacOSX aarch64 [jogamp-macosx-aarch64]                      [jar]
+[INFO] JOGL - MacOSX x86-64 [jogamp-macosx-x86-64]                        [jar]
+[INFO] JOGL - Windows x86-64 [jogamp-windows-x86-64]                      [jar]
+[INFO] 3D Viewer [weasis-dicom-viewer3d]                                  [jar]
+[INFO] DICOM plugins [weasis-dicom]                                       [pom]
+[INFO] Acquire - Media explorer [weasis-acquire-explorer]                 [jar]
+[INFO] Acquire - Media editor [weasis-acquire-editor]                     [jar]
+[INFO] Acquire plugins [weasis-acquire]                                   [pom]
+[INFO] Weasis framework                                                   [pom]
+[INFO] Tests                                                              [pom]
+[INFO] 
+[INFO] ----------------------< org.weasis:weasis-parent >----------------------
+[INFO] Building Weasis framework parent [weasis-parent] 4.6.6            [1/41]
+[INFO]   from weasis-parent\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-parent ---
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-parent ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-parent\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-parent ---
+[INFO] Generating flattened POM of project org.weasis:weasis-parent:pom:4.6.6...
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-parent ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-parent\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\weasis-parent\4.6.6\weasis-parent-4.6.6.pom
+[INFO] 
+[INFO] ------------------< org.weasis.opencv:weasis-opencv >-------------------
+[INFO] Building OpenCV plugins [weasis-opencv] 4.6.6                     [2/41]
+[INFO]   from weasis-opencv\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-opencv ---
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-opencv ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-opencv ---
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-opencv ---
+[INFO] Generating flattened POM of project org.weasis.opencv:weasis-opencv:pom:4.6.6...
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-opencv ---
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-opencv ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv\4.6.6\weasis-opencv-4.6.6.pom
+[INFO] 
+[INFO] ---------< org.weasis.opencv:weasis-opencv-core-linux-aarch64 >---------
+[INFO] Building OpenCV - Linux aarch64 [weasis-opencv-core-linux-aarch64] 4.12.2-dcm [3/41]
+[INFO]   from weasis-opencv\weasis-opencv-core-linux-aarch64\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:properties (default) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:copy (copy-dependency) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\src\main\resources
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\src\main\java
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] Generating flattened POM of project org.weasis.opencv:weasis-opencv-core-linux-aarch64:jar:4.12.2-dcm...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] Building jar: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\target\weasis-opencv-core-linux-aarch64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-opencv-core-linux-aarch64 ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-linux-aarch64\4.12.2-dcm\weasis-opencv-core-linux-aarch64-4.12.2-dcm.pom
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-aarch64\target\weasis-opencv-core-linux-aarch64-4.12.2-dcm.jar to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-linux-aarch64\4.12.2-dcm\weasis-opencv-core-linux-aarch64-4.12.2-dcm.jar
+[INFO] 
+[INFO] ---------< org.weasis.opencv:weasis-opencv-core-linux-x86-64 >----------
+[INFO] Building OpenCV - Linux amd64 [weasis-opencv-core-linux-x86-64] 4.12.2-dcm [4/41]
+[INFO]   from weasis-opencv\weasis-opencv-core-linux-x86-64\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:properties (default) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:copy (copy-dependency) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\src\main\resources
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\src\main\java
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] Generating flattened POM of project org.weasis.opencv:weasis-opencv-core-linux-x86-64:jar:4.12.2-dcm...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] Building jar: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\target\weasis-opencv-core-linux-x86-64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-opencv-core-linux-x86-64 ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-linux-x86-64\4.12.2-dcm\weasis-opencv-core-linux-x86-64-4.12.2-dcm.pom
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-linux-x86-64\target\weasis-opencv-core-linux-x86-64-4.12.2-dcm.jar to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-linux-x86-64\4.12.2-dcm\weasis-opencv-core-linux-x86-64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --------< org.weasis.opencv:weasis-opencv-core-macosx-aarch64 >---------
+[INFO] Building OpenCV - Mac Silicone ARM-64 [weasis-opencv-core-macosx-aarch64] 4.12.2-dcm [5/41]
+[INFO]   from weasis-opencv\weasis-opencv-core-macosx-aarch64\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:properties (default) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:copy (copy-dependency) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\src\main\resources
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\src\main\java
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] Generating flattened POM of project org.weasis.opencv:weasis-opencv-core-macosx-aarch64:jar:4.12.2-dcm...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] Building jar: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\target\weasis-opencv-core-macosx-aarch64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-opencv-core-macosx-aarch64 ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-macosx-aarch64\4.12.2-dcm\weasis-opencv-core-macosx-aarch64-4.12.2-dcm.pom
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-aarch64\target\weasis-opencv-core-macosx-aarch64-4.12.2-dcm.jar to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-macosx-aarch64\4.12.2-dcm\weasis-opencv-core-macosx-aarch64-4.12.2-dcm.jar
+[INFO] 
+[INFO] ---------< org.weasis.opencv:weasis-opencv-core-macosx-x86-64 >---------
+[INFO] Building OpenCV - Mac amd64 [weasis-opencv-core-macosx-x86-64] 4.12.2-dcm [6/41]
+[INFO]   from weasis-opencv\weasis-opencv-core-macosx-x86-64\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:properties (default) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:copy (copy-dependency) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\src\main\resources
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\src\main\java
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] Generating flattened POM of project org.weasis.opencv:weasis-opencv-core-macosx-x86-64:jar:4.12.2-dcm...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] Building jar: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\target\weasis-opencv-core-macosx-x86-64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-opencv-core-macosx-x86-64 ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-macosx-x86-64\4.12.2-dcm\weasis-opencv-core-macosx-x86-64-4.12.2-dcm.pom
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-macosx-x86-64\target\weasis-opencv-core-macosx-x86-64-4.12.2-dcm.jar to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-macosx-x86-64\4.12.2-dcm\weasis-opencv-core-macosx-x86-64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --------< org.weasis.opencv:weasis-opencv-core-windows-x86-64 >---------
+[INFO] Building OpenCV - Windows x86-64 [weasis-opencv-core-windows-x86-64] 4.12.2-dcm [7/41]
+[INFO]   from weasis-opencv\weasis-opencv-core-windows-x86-64\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:properties (default) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] 
+[INFO] --- dependency:3.9.0:copy (copy-dependency) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\src\main\resources
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\src\main\java
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] Generating flattened POM of project org.weasis.opencv:weasis-opencv-core-windows-x86-64:jar:4.12.2-dcm...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] Building jar: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\target\weasis-opencv-core-windows-x86-64-4.12.2-dcm.jar
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-opencv-core-windows-x86-64 ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-windows-x86-64\4.12.2-dcm\weasis-opencv-core-windows-x86-64-4.12.2-dcm.pom
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-opencv\weasis-opencv-core-windows-x86-64\target\weasis-opencv-core-windows-x86-64-4.12.2-dcm.jar to C:\Users\Administrator\.m2\repository\org\weasis\opencv\weasis-opencv-core-windows-x86-64\4.12.2-dcm\weasis-opencv-core-windows-x86-64-4.12.2-dcm.jar
+[INFO] 
+[INFO] ----------------< org.weasis.launcher:weasis-launcher >-----------------
+[INFO] Building Weasis Launcher (Felix) [weasis-launcher] 4.6.6          [8/41]
+[INFO]   from weasis-launcher\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-launcher ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-launcher\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-launcher ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-launcher\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-launcher ---
+[INFO] 
+[INFO] --- build-helper:3.6.1:timestamp-property (timestamp-property) @ weasis-launcher ---
+[INFO] 
+[INFO] --- build-helper:3.6.1:add-resource (add-resource) @ weasis-launcher ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-launcher ---
+[INFO] Copying 60 resources from src\main\resources to target\classes
+[INFO] Copying 29 resources from src\main\java to target\classes
+[INFO] Copying 3 resources from conf to target\conf
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-launcher ---
+[INFO] Generating flattened POM of project org.weasis.launcher:weasis-launcher:jar:4.6.6...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-launcher ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 19 source files with javac [debug release 24] to target\classes
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-launcher/src/main/java/org/weasis/launcher/WeasisLauncher.java: 某些输入文件使用或覆盖了已过时的 API。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-launcher/src/main/java/org/weasis/launcher/WeasisLauncher.java: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-launcher/src/main/java/org/weasis/launcher/WeasisLauncher.java: 某些输入文件使用了未经检查或不安全的操作。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-launcher/src/main/java/org/weasis/launcher/WeasisLauncher.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-launcher ---
+[INFO] skip non existing resourceDirectory E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-launcher\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-launcher ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-launcher ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ weasis-launcher ---
+[INFO] Building jar: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-launcher\target\weasis-launcher-4.6.6.jar
+[INFO] 
+[INFO] --- shade:3.6.1:shade (default) @ weasis-launcher ---
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- install:3.1.4:install (default-install) @ weasis-launcher ---
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-launcher\.flattened-pom.xml to C:\Users\Administrator\.m2\repository\org\weasis\launcher\weasis-launcher\4.6.6\weasis-launcher-4.6.6.pom
+[INFO] Installing E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-launcher\target\weasis-launcher-4.6.6.jar to C:\Users\Administrator\.m2\repository\org\weasis\launcher\weasis-launcher\4.6.6\weasis-launcher-4.6.6.jar
+[INFO] 
+[INFO] --------------------< org.weasis.core:weasis-core >---------------------
+[INFO] Building Core [weasis-core] 4.6.6                                 [9/41]
+[INFO]   from weasis-core\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ weasis-core ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-core\target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten.clean) @ weasis-core ---
+[INFO] Deleting E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-core\.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (min-requirement) @ weasis-core ---
+[INFO] 
+[INFO] --- dependency:3.9.0:properties (default) @ weasis-core ---
+[INFO] 
+[INFO] --- dependency:3.9.0:copy-dependencies (copy-dependency) @ weasis-core ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ weasis-core ---
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\java to target\classes
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ weasis-core ---
+[INFO] Generating flattened POM of project org.weasis.core:weasis-core:jar:4.6.6...
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ weasis-core ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 346 source files with javac [debug release 24] to target\classes
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-core/src/main/java/org/weasis/core/api/auth/BasicHttpClient.java: 某些输入文件使用或覆盖了已过时的 API。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-core/src/main/java/org/weasis/core/api/auth/BasicHttpClient.java: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-core/src/main/java/org/weasis/core/api/command/Options.java: 某些输入文件使用了未经检查或不安全的操作。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-core/src/main/java/org/weasis/core/api/command/Options.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] 
+[INFO] --- bnd:7.1.0:bnd-process (default) @ weasis-core ---
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ weasis-core ---
+[INFO] Copying 38 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ weasis-core ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 29 source files with javac [debug release 24] to target\test-classes
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-core/src/test/java/org/weasis/core/ui/test/utils/ModelListHelper.java: E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-core\src\test\java\org\weasis\core\ui\test\utils\ModelListHelper.java使用了未经检查或不安全的操作。
+[INFO] /E:/Workspace/AI/Claude/DICOM Server/Weasis/weasis-core/src/test/java/org/weasis/core/ui/test/utils/ModelListHelper.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ weasis-core ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] Weasis framework parent [weasis-parent] 4.6.6 ...... SUCCESS [  0.743 s]
+[INFO] OpenCV plugins [weasis-opencv] 4.6.6 ............... SUCCESS [  0.325 s]
+[INFO] OpenCV - Linux aarch64 [weasis-opencv-core-linux-aarch64] 4.12.2-dcm SUCCESS [  2.632 s]
+[INFO] OpenCV - Linux amd64 [weasis-opencv-core-linux-x86-64] 4.12.2-dcm SUCCESS [  1.198 s]
+[INFO] OpenCV - Mac Silicone ARM-64 [weasis-opencv-core-macosx-aarch64] 4.12.2-dcm SUCCESS [  0.681 s]
+[INFO] OpenCV - Mac amd64 [weasis-opencv-core-macosx-x86-64] 4.12.2-dcm SUCCESS [  0.942 s]
+[INFO] OpenCV - Windows x86-64 [weasis-opencv-core-windows-x86-64] 4.12.2-dcm SUCCESS [  1.044 s]
+[INFO] Weasis Launcher (Felix) [weasis-launcher] 4.6.6 .... SUCCESS [  2.565 s]
+[INFO] Core [weasis-core] 4.6.6 ........................... FAILURE [  6.696 s]
+[INFO] ImageIO codecs [weasis-imageio-codec] 4.6.6 ........ SKIPPED
+[INFO] Base parent [weasis-base-parent] 4.6.6 ............. SKIPPED
+[INFO] Base UI [weasis-base-ui] 4.6.6 ..................... SKIPPED
+[INFO] Base - Media explorer [weasis-base-explorer] 4.6.6 . SKIPPED
+[INFO] Base - Image viewer (non-DICOM) [weasis-base-viewer2d] 4.6.6 SKIPPED
+[INFO] Base plugins [weasis-base] 4.6.6 ................... SKIPPED
+[INFO] DICOM parent [weasis-dicom-parent] 4.6.6 ........... SKIPPED
+[INFO] DICOM - Codecs and parsers for DICOM [weasis-dicom-codec] 4.6.6 SKIPPED
+[INFO] DICOM - Data explorer [weasis-dicom-explorer] 4.6.6  SKIPPED
+[INFO] DICOM - Viewer (2D and MPR) [weasis-dicom-viewer2d] 4.6.6 SKIPPED
+[INFO] DICOM - Viewer of DICOM Structured Report [weasis-dicom-sr] 4.6.6 SKIPPED
+[INFO] DICOM - Viewer for ECGs [weasis-dicom-wave] 4.6.6 .. SKIPPED
+[INFO] DICOM - Audio Player [weasis-dicom-au] 4.6.6 ....... SKIPPED
+[INFO] DICOM - Send (DICOM and DICOMWeb protocols) [weasis-dicom-send] 4.6.6 SKIPPED
+[INFO] DICOM - Query/Retrieve [weasis-dicom-qr] 4.6.6 ..... SKIPPED
+[INFO] DICOM - Viewer for RTs (radiotherapy) [weasis-dicom-rt] 4.6.6 SKIPPED
+[INFO] DICOM - Export ISO image [weasis-dicom-isowriter] 4.6.6 SKIPPED
+[INFO] 3D Plug-ins [weasis-dicom-3d] 4.6.6 ................ SKIPPED
+[INFO] JOGL - Java Bindings for OpenGL [jogamp] 2.6.0 ..... SKIPPED
+[INFO] JOGL plugins [jogamp-native] 4.6.6 ................. SKIPPED
+[INFO] JOGL - Linux aarch64 [jogamp-linux-aarch64] 2.6.0 .. SKIPPED
+[INFO] JOGL - Linux x86-64 [jogamp-linux-x86-64] 2.6.0 .... SKIPPED
+[INFO] JOGL - MacOSX aarch64 [jogamp-macosx-aarch64] 2.6.0  SKIPPED
+[INFO] JOGL - MacOSX x86-64 [jogamp-macosx-x86-64] 2.6.0 .. SKIPPED
+[INFO] JOGL - Windows x86-64 [jogamp-windows-x86-64] 2.6.0  SKIPPED
+[INFO] 3D Viewer [weasis-dicom-viewer3d] 4.6.6 ............ SKIPPED
+[INFO] DICOM plugins [weasis-dicom] 4.6.6 ................. SKIPPED
+[INFO] Acquire - Media explorer [weasis-acquire-explorer] 4.6.6 SKIPPED
+[INFO] Acquire - Media editor [weasis-acquire-editor] 4.6.6 SKIPPED
+[INFO] Acquire plugins [weasis-acquire] 4.6.6 ............. SKIPPED
+[INFO] Weasis framework 4.6.6 ............................. SKIPPED
+[INFO] Tests 4.6.6 ........................................ SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17.224 s
+[INFO] Finished at: 2026-03-09T17:02:56+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.4:test (default-test) on project weasis-core: 
+[ERROR] 
+[ERROR] See E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-core\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
+[ERROR] Command was cmd.exe /X /C ""D:\Program Files\Java\jdk-24\bin\java" -Djava.library.path=E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-core\target/lib/${os-name}-${cpu-name} -Xshare:off -XX:+EnableDynamicAgentLoading -jar C:\Users\Administrator\AppData\Local\Temp\surefire520802461095618629\surefirebooter-20260309170256433_3.jar C:\Users\Administrator\AppData\Local\Temp\surefire520802461095618629 2026-03-09T17-02-42_740-jvmRun1 surefire-20260309170256433_1tmp surefire_0-20260309170256433_2tmp"
+[ERROR] Error occurred in starting fork, check output in log
+[ERROR] Process Exit Code: 1
+[ERROR] org.apache.maven.surefire.booter.SurefireBooterForkException: The forked VM terminated without properly saying goodbye. VM crash or System.exit called?
+[ERROR] Command was cmd.exe /X /C ""D:\Program Files\Java\jdk-24\bin\java" -Djava.library.path=E:\Workspace\AI\Claude\DICOM Server\Weasis\weasis-core\target/lib/${os-name}-${cpu-name} -Xshare:off -XX:+EnableDynamicAgentLoading -jar C:\Users\Administrator\AppData\Local\Temp\surefire520802461095618629\surefirebooter-20260309170256433_3.jar C:\Users\Administrator\AppData\Local\Temp\surefire520802461095618629 2026-03-09T17-02-42_740-jvmRun1 surefire-20260309170256433_1tmp surefire_0-20260309170256433_2tmp"
+[ERROR] Error occurred in starting fork, check output in log
+[ERROR] Process Exit Code: 1
+[ERROR] 	at org.apache.maven.plugin.surefire.booterclient.ForkStarter.fork(ForkStarter.java:643)
+[ERROR] 	at org.apache.maven.plugin.surefire.booterclient.ForkStarter.run(ForkStarter.java:285)
+[ERROR] 	at org.apache.maven.plugin.surefire.booterclient.ForkStarter.run(ForkStarter.java:250)
+[ERROR] 	at org.apache.maven.plugin.surefire.AbstractSurefireMojo.executeProvider(AbstractSurefireMojo.java:1337)
+[ERROR] 	at org.apache.maven.plugin.surefire.AbstractSurefireMojo.executeAfterPreconditionsChecked(AbstractSurefireMojo.java:1135)
+[ERROR] 	at org.apache.maven.plugin.surefire.AbstractSurefireMojo.execute(AbstractSurefireMojo.java:969)
+[ERROR] 	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:126)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2(MojoExecutor.java:328)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor.doExecute(MojoExecutor.java:316)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:212)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:174)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor.access$000(MojoExecutor.java:75)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor$1.run(MojoExecutor.java:162)
+[ERROR] 	at org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute(DefaultMojosExecutionStrategy.java:39)
+[ERROR] 	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:159)
+[ERROR] 	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:105)
+[ERROR] 	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:73)
+[ERROR] 	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:53)
+[ERROR] 	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:118)
+[ERROR] 	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:261)
+[ERROR] 	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:173)
+[ERROR] 	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:101)
+[ERROR] 	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:919)
+[ERROR] 	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:285)
+[ERROR] 	at org.apache.maven.cli.MavenCli.main(MavenCli.java:207)
+[ERROR] 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+[ERROR] 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+[ERROR] 	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:255)
+[ERROR] 	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:201)
+[ERROR] 	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:361)
+[ERROR] 	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:314)
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :weasis-core
