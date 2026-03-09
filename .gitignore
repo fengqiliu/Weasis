@@ -48,3 +48,5 @@ weasis_*.snap
 #comlile
 build-dist
 
+# Claude Code
+.claude/
